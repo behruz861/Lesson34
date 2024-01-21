@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+    {% for buy in history_list %}
+        <p>{{ buy.user.username }} - {{ buy.buy_datetime }}</p>
+        <ul>
+            {% for product in buy.product_list.all %}
+                <li>{{ product }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+{% endblock content %}
+

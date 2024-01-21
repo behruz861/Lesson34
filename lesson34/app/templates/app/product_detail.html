@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>Product {{ product.title }}</h1>
+    {% for category in product.categories.all %}
+        <span>{{ category }}, </span>
+    {% endfor %}
+    <p>Price - {{ product.price }}</p>
+    <p>Description - {{ product.description }}</p>
+    <br><br>
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'add_comment' product.slug %}" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Add">
+    </form>
+
+    <!-- Like/Dislike buttons for the product -->
+    <form method="post" action="{% url 'like_product' slug=product.slug %}">
+        {% csrf_token %}
+        <button type="submit" name="like">Like</button>
+        <button type="submit" name="dislike">Dislike</button>
+    </form>
+    {% endif %}
+
+    <br>
+    <h2>Comments</h2>
+    {% for comment in comment_list %}
+        <p>{{ comment.user.username }} - {{ comment.published }}</p>
+        <p>{{ comment.body }}</p>
+
+        <!-- Like/Dislike buttons for each comment -->
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'like_comment' pk=comment.pk %}">
+            {% csrf_token %}
+            <button type="submit" name="like">Like</button>
+            <button type="submit" name="dislike">Dislike</button>
+        </form>
+        {% endif %}
+
+        <br>
+    {% endfor %}
+
+{% endblock content %}

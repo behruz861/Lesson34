@@ -1,0 +1,17 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    {% for product in product_list %}
+        <p>{{ product }}</p>
+        <p>{{ product.likes.count }}</p>
+
+        <form action="{% url 'like_product' product.slug %}">
+            <input type="submit" value="Like">
+        </form>
+        <p><a href="{% url 'add_product' product.id %}">Добавить в корзину</a></p>
+        <p><a href="{% url 'product_detail' product.slug %}">Detail</a></p>
+
+        <br>
+    {% endfor %}
+{% endblock content %}
+

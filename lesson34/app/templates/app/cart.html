@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>Cart for {{ user.username }}</h1>
+
+    {% for product in product_list %}
+        <p>{{ product }}</p>
+        <p><a href="{% url 'remove_from_cart' product.slug %}">Remove from cart</a></p>
+    {% endfor %}
+
+
+    <p><a href="{% url 'buy' %}">Buy</a></p>
+
+
+{% endblock content %}
+
